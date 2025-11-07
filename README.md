@@ -125,5 +125,36 @@ model_r.fit(X_train, y_train)
 # Evaluate
 y_pred = model_r.predict(X_test)
 print("Accuracy:", accuracy_score(y_test, y_pred))
-exit
+```
+## Model Saving
 
+The trained model and preprocessing pipeline are saved using joblib:
+```python
+joblib.dump(pipeline, "pipeline.pkl")
+```
+
+This allows easy reuse in prediction apps or Streamlit dashboards.
+
+## Installation & Setup
+### Clone the Repository
+git clone https://github.com/<your-username>/Students_Performance.git
+cd Students_Performance
+
+### Create a Virtual Environment (Recommended)
+python -m venv venv
+venv\Scripts\activate        # On Windows
+# OR
+source venv/bin/activate     # On macOS/Linux
+
+### Install Dependencies
+```python
+pip install -r requirements.txt
+```
+
+## Run the Streamlit App
+```python
+streamlit run Students_Performance.py
+```
+
+Then open the displayed local URL, usually:
+http://localhost:8501
