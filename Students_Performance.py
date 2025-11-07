@@ -325,62 +325,61 @@ if submit:
         "Internet_Score": internet_score_val,
         "Parent_Support_Score": parent_support_score_val
     }])
+    # Encode categorical columns using saved encoders
+    input_df = raw_input.copy()
+    for col, le in encoders.items():
+        if col in input_df.columns:
+            val = input_df.loc[0, col]
+            if val in le.classes_:
+                input_df[col] = le.transform(input_df[col])
+            else:
+                st.warning(f"⚠️ '{val}' not seen in training for '{col}', using fallback encoding.")
+                input_df[col] = 0
+    # Ensure numeric types
+    for col in NUMERIC_COLS:
+        if col in input_df.columns:
+            input_df[col] = pd.to_numeric(input_df[col], errors="coerce").fillna(0)
+    # Reorder and scale numeric columns
+    input_df = input_df[FEATURES]
+    scaled_values = scaler.transform(input_df[NUMERIC_COLS])
+    input_df.loc[:, NUMERIC_COLS] = scaled_values
 
-# Encode categorical columns using saved encoders
-input_df = raw_input.copy()
-for col, le in encoders.items():
-    if col in input_df.columns:
-        val = input_df.loc[0, col]
-        if val in le.classes_:
-            input_df[col] = le.transform(input_df[col])
-        else:
-            st.warning(f"⚠️ '{val}' not seen in training for '{col}', using fallback encoding.")
-            input_df[col] = 0
-
-# Ensure numeric types
-for col in NUMERIC_COLS:
-    if col in input_df.columns:
-        input_df[col] = pd.to_numeric(input_df[col], errors="coerce").fillna(0)
-# Reorder and scale numeric columns
-input_df = input_df[FEATURES]
-scaled_values = scaler.transform(input_df[NUMERIC_COLS])
-input_df.loc[:, NUMERIC_COLS] = scaled_values
-
-# Predict
-prediction = model.predict(input_df)
-probability = model.predict_proba(input_df)[0][1]  # class 1 = PASS
+    # Predict
+    prediction = model.predict(input_df)
+    probability = model.predict_proba(input_df)[0][1]  # class 1 = PASS
         
-# Display Result
-st.markdown("---")
-if prediction[0] == 1:
-    st.success(f"🎉 The student is likely to **PASS** (Confidence: {probability*100:.2f}%)")
-else:
-    st.error(f"❌ The student is likely to **FAIL** (Confidence: {(1-probability)*100:.2f}%)")
+    # Display Result
+    st.markdown("---")
+    if prediction[0] == 1:
+        st.success(f"🎉 The student is likely to **PASS** (Confidence: {probability*100:.2f}%)")
+    else:
+        st.error(f"❌ The student is likely to **FAIL** (Confidence: {(1-probability)*100:.2f}%)")
     
-st.subheader("Prediction Probability") 
-labels = ["Fail", "Pass"] 
-probabilities = [1-probability, probability] 
-fig, ax = plt.subplots() 
-ax.barh(labels, probabilities, color=['red','green']) 
-for i, v in enumerate(probabilities): 
-    ax.text(v + 0.01, i, f"{v:.1%}", va='center') 
-ax.set_xlim(0,1) 
-st.pyplot(fig) 
+    st.subheader("Prediction Probability") 
+    labels = ["Fail", "Pass"] 
+    probabilities = [1-probability, probability] 
+    fig, ax = plt.subplots() 
+    ax.barh(labels, probabilities, color=['red','green']) 
+    for i, v in enumerate(probabilities): 
+        ax.text(v + 0.01, i, f"{v:.1%}", va='center') 
+    ax.set_xlim(0,1) 
+    st.pyplot(fig) 
         
-st.subheader("Student Context")
-fig, ax = plt.subplots()
-ax.scatter(df['Study_Hours_per_Week'], df['Total_Score'], alpha=0.5)
-ax.scatter(study_hours_per_week, total_score, color='red', label="Current Student")
-ax.set_xlabel("Study Hours per Week")
-ax.set_ylabel("Total Score")
-ax.legend()
-st.pyplot(fig)
+    st.subheader("Student Context")
+    fig, ax = plt.subplots()
+    ax.scatter(df['Study_Hours_per_Week'], df['Total_Score'], alpha=0.5)
+    ax.scatter(study_hours_per_week, total_score, color='red', label="Current Student")
+    ax.set_xlabel("Study Hours per Week")
+    ax.set_ylabel("Total Score")
+    ax.legend()
+    st.pyplot(fig)
 
     
 
 
 
     
+
 
 
 
