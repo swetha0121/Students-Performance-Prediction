@@ -190,6 +190,9 @@ NUMERIC_COLS = pipeline["numeric_cols"]
 st.set_page_config(page_title="🎓 Student Performance Predictor", layout="centered")
 
 st.title("Student Performance Predictor")
+st.write("Result Distribution in Dataset:")
+st.bar_chart(df_no['Result'].value_counts())
+
 st.write("Enter student details to predict Pass/Fail:")
 
 tab1, tab2, tab3, tab4 = st.tabs(["🏠 Overview", "📊 Data Insights", "📁 Dataset", "⚙️ Feature Importance"])
@@ -365,6 +368,7 @@ if submit:
 
 
     
+
 
 
 
