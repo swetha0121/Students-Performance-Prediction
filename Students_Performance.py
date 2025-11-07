@@ -192,7 +192,7 @@ st.set_page_config(page_title="🎓 Student Performance Predictor", layout="cent
 st.title("Student Performance Predictor")
 st.write("Enter student details to predict Pass/Fail:")
 
-tab1, tab2, tab3, tab4 = st.tabs(["🏠 Overview", "📊 Data Insights", "🔮 Prediction", "⚙️ Feature Importance"])
+tab1, tab2, tab3 = st.tabs(["🏠 Overview", "📊 Data Insights", "⚙️ Feature Importance"])
 
 # ----- Tab 1: Overview -----
 with tab1:
@@ -213,10 +213,12 @@ with tab2:
 
     fig = px.bar(df, x="Department", y="Total_Score", color="Result", barmode="group", title="🏫 Department-wise Average Score")
     st.plotly_chart(fig, use_container_width=True)
+    st.header("Data Preview")
+    st.dataframe(df)
 
 
 # ----- Tab 3: Feature Importance -----
-with tab4:
+with tab3:
     st.header(" Feature Importance")
     feature_importance = pd.DataFrame({
         'Feature': X.columns,
@@ -289,95 +291,98 @@ with st.form("prediction_form"):
     
     
     submit = st.form_submit_button("Predict")
-with tab3:    
-    st.header(" Prediction")
-    # Create input DataFrame with **exact column names** as in your training data
-    if submit:
-        parent_edu_score_map = {'No High School':0, 'High School':1, "Bachelor's":2, "Master's":3, 'PhD':4}
-        parent_edu_score_val = parent_edu_score_map[parent_education_level]
-        internet_score_val = 1 if internet_access_at_home == "Yes" else 0
-        parent_support_score_val = parent_edu_score_val * 0.7 + internet_score_val * 0.3
-        study_efficiency_val = total_score / (study_hours_per_week * attendance + 1)
-        
-         # Encode inputs
-        raw_input = pd.DataFrame([{
-            "Gender": gender,
-            "Age": age,
-            "Department": department,
-            "Attendance (%)": attendance,
-            "Midterm_Score": midterm_score,
-            "Final_Score": final_score,
-            "Assignments_Avg": assignments_avg,
-            "Quizzes_Avg": quizzes_avg,
-            "Participation_Score": participation_score,
-            "Projects_Score": projects_score,
-            "Total_Score": total_score,
-            "Grade": grade,
-            "Study_Hours_per_Week": study_hours_per_week,
-            "Extracurricular_Activities": extracurricular_activities,
-            "Internet_Access_at_Home": internet_access_at_home,
-            "Parent_Education_Level": parent_education_level,
-            "Family_Income_Level": family_income_level,
-            "Stress_Level (1-10)": stress_level,
-            "Sleep_Hours_per_Night": sleep_hours_per_night,
-            "Study_Efficiency": study_efficiency_val,
-            "Parent_Education_Score": parent_edu_score_val,
-            "Internet_Score": internet_score_val,
-            "Parent_Support_Score": parent_support_score_val
-        }])
 
-        # Encode categorical columns using saved encoders
-        input_df = raw_input.copy()
-        for col, le in encoders.items():
-            if col in input_df.columns:
-                val = input_df.loc[0, col]
-                if val in le.classes_:
-                    input_df[col] = le.transform(input_df[col])
-                else:
-                    st.warning(f"⚠️ '{val}' not seen in training for '{col}', using fallback encoding.")
-                    input_df[col] = 0
-         # Ensure numeric types
-        for col in NUMERIC_COLS:
-            if col in input_df.columns:
-                input_df[col] = pd.to_numeric(input_df[col], errors="coerce").fillna(0)
-        # Reorder and scale numeric columns
-        input_df = input_df[FEATURES]
-        scaled_values = scaler.transform(input_df[NUMERIC_COLS])
-        input_df.loc[:, NUMERIC_COLS] = scaled_values
-        # Predict
-        prediction = model.predict(input_df)
-        probability = model.predict_proba(input_df)[0][1]  # class 1 = PASS
-        # Display Result
-        st.markdown("---")
-        if prediction[0] == 1:
-            st.success(f"🎉 The student is likely to **PASS** (Confidence: {probability*100:.2f}%)")
+# Create input DataFrame with **exact column names** as in your training data
+if submit:
+    parent_edu_score_map = {'No High School':0, 'High School':1, "Bachelor's":2, "Master's":3, 'PhD':4}
+    parent_edu_score_val = parent_edu_score_map[parent_education_level]
+    internet_score_val = 1 if internet_access_at_home == "Yes" else 0
+    parent_support_score_val = parent_edu_score_val * 0.7 + internet_score_val * 0.3
+    study_efficiency_val = total_score / (study_hours_per_week * attendance + 1)
+        
+# Encode inputs
+raw_input = pd.DataFrame([{
+    "Gender": gender,
+    "Age": age,
+    "Department": department,
+    "Attendance (%)": attendance,
+    "Midterm_Score": midterm_score,
+    "Final_Score": final_score,
+    "Assignments_Avg": assignments_avg,
+    "Quizzes_Avg": quizzes_avg,
+    "Participation_Score": participation_score,
+    "Projects_Score": projects_score,
+    "Total_Score": total_score,
+    "Grade": grade,
+    "Study_Hours_per_Week": study_hours_per_week,
+    "Extracurricular_Activities": extracurricular_activities,
+    "Internet_Access_at_Home": internet_access_at_home,
+    "Parent_Education_Level": parent_education_level,
+    "Family_Income_Level": family_income_level,
+    "Stress_Level (1-10)": stress_level,
+    "Sleep_Hours_per_Night": sleep_hours_per_night,
+    "Study_Efficiency": study_efficiency_val,
+    "Parent_Education_Score": parent_edu_score_val,
+    "Internet_Score": internet_score_val,
+    "Parent_Support_Score": parent_support_score_val
+}])
+
+# Encode categorical columns using saved encoders
+input_df = raw_input.copy()
+for col, le in encoders.items():
+    if col in input_df.columns:
+        val = input_df.loc[0, col]
+        if val in le.classes_:
+            input_df[col] = le.transform(input_df[col])
         else:
-            st.error(f"❌ The student is likely to **FAIL** (Confidence: {(1-probability)*100:.2f}%)")
-             
-        st.subheader("Prediction Probability") 
-        labels = ["Fail", "Pass"] 
-        probabilities = [1-probability, probability] 
-        fig, ax = plt.subplots() 
-        ax.barh(labels, probabilities, color=['red','green']) 
-        for i, v in enumerate(probabilities): 
-            ax.text(v + 0.01, i, f"{v:.1%}", va='center') 
-        ax.set_xlim(0,1) 
-        st.pyplot(fig) 
+            st.warning(f"⚠️ '{val}' not seen in training for '{col}', using fallback encoding.")
+            input_df[col] = 0
+
+# Ensure numeric types
+for col in NUMERIC_COLS:
+    if col in input_df.columns:
+        input_df[col] = pd.to_numeric(input_df[col], errors="coerce").fillna(0)
+# Reorder and scale numeric columns
+input_df = input_df[FEATURES]
+scaled_values = scaler.transform(input_df[NUMERIC_COLS])
+input_df.loc[:, NUMERIC_COLS] = scaled_values
+
+# Predict
+prediction = model.predict(input_df)
+probability = model.predict_proba(input_df)[0][1]  # class 1 = PASS
         
-        st.subheader("Student Context")
-        fig, ax = plt.subplots()
-        ax.scatter(df['Study_Hours_per_Week'], df['Total_Score'], alpha=0.5)
-        ax.scatter(study_hours_per_week, total_score, color='red', label="Current Student")
-        ax.set_xlabel("Study Hours per Week")
-        ax.set_ylabel("Total Score")
-        ax.legend()
-        st.pyplot(fig)
+# Display Result
+st.markdown("---")
+if prediction[0] == 1:
+    st.success(f"🎉 The student is likely to **PASS** (Confidence: {probability*100:.2f}%)")
+else:
+    st.error(f"❌ The student is likely to **FAIL** (Confidence: {(1-probability)*100:.2f}%)")
+    
+st.subheader("Prediction Probability") 
+labels = ["Fail", "Pass"] 
+probabilities = [1-probability, probability] 
+fig, ax = plt.subplots() 
+ax.barh(labels, probabilities, color=['red','green']) 
+for i, v in enumerate(probabilities): 
+    ax.text(v + 0.01, i, f"{v:.1%}", va='center') 
+ax.set_xlim(0,1) 
+st.pyplot(fig) 
+        
+st.subheader("Student Context")
+fig, ax = plt.subplots()
+ax.scatter(df['Study_Hours_per_Week'], df['Total_Score'], alpha=0.5)
+ax.scatter(study_hours_per_week, total_score, color='red', label="Current Student")
+ax.set_xlabel("Study Hours per Week")
+ax.set_ylabel("Total Score")
+ax.legend()
+st.pyplot(fig)
 
     
 
 
 
     
+
 
 
 
