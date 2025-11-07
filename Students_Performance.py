@@ -102,8 +102,12 @@ numeric_cols = X.select_dtypes(include=["int64", "float64"]).columns.tolist()
 df_clean = df_no.copy()
 Scaler = StandardScaler()
 X[numeric_cols] = Scaler.fit_transform(X[numeric_cols])
+
+# Handle imbalance using SMOTE
+sm = SMOTE(random_state=42)
+X_res, y_res = sm.fit_resample(X, y)
 # split + train test model
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+X_train, X_test, y_train, y_test = train_test_split(X_res, y_res, test_size=0.2, random_state=42)
 print("\nTrain size:", X_train.shape, "Test size:", X_test.shape)
 
 
@@ -165,7 +169,7 @@ plt.show()
 print("\nTop 10 Important Features:\n", feat_imp.head(10))
 
 pipeline = {
-    "model": model,
+    "model": best_rf,
     "scaler": Scaler,
     "encoders": encoders,
     "features": X.columns.tolist(),
@@ -330,14 +334,17 @@ if submit:
     input_df = input_df[FEATURES]
     scaled_values = scaler.transform(input_df[NUMERIC_COLS])
     input_df.loc[:, NUMERIC_COLS] = scaled_values
+    
+    # ensure feature order
+    input_df = input_df.reindex(columns=FEATURES, fill_value=0)
 
     # Predict
-    prediction = model.predict(input_df)
+    prediction = model.predict(input_df)[0]
     probability = model.predict_proba(input_df)[0][1]  # class 1 = PASS
         
     # Display Result
     st.markdown("---")
-    if prediction[0] == 1:
+    if prediction == 1:
         st.success(f"🎉 The student is likely to **PASS** (Confidence: {probability*100:.2f}%)")
     else:
         st.error(f"❌ The student is likely to **FAIL** (Confidence: {(1-probability)*100:.2f}%)")
@@ -366,6 +373,7 @@ if submit:
 
 
     
+
 
 
 
