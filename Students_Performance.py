@@ -299,33 +299,32 @@ if submit:
     internet_score_val = 1 if internet_access_at_home == "Yes" else 0
     parent_support_score_val = parent_edu_score_val * 0.7 + internet_score_val * 0.3
     study_efficiency_val = total_score / (study_hours_per_week * attendance + 1)
-        
-# Encode inputs
-raw_input = pd.DataFrame([{
-    "Gender": gender,
-    "Age": age,
-    "Department": department,
-    "Attendance (%)": attendance,
-    "Midterm_Score": midterm_score,
-    "Final_Score": final_score,
-    "Assignments_Avg": assignments_avg,
-    "Quizzes_Avg": quizzes_avg,
-    "Participation_Score": participation_score,
-    "Projects_Score": projects_score,
-    "Total_Score": total_score,
-    "Grade": grade,
-    "Study_Hours_per_Week": study_hours_per_week,
-    "Extracurricular_Activities": extracurricular_activities,
-    "Internet_Access_at_Home": internet_access_at_home,
-    "Parent_Education_Level": parent_education_level,
-    "Family_Income_Level": family_income_level,
-    "Stress_Level (1-10)": stress_level,
-    "Sleep_Hours_per_Night": sleep_hours_per_night,
-    "Study_Efficiency": study_efficiency_val,
-    "Parent_Education_Score": parent_edu_score_val,
-    "Internet_Score": internet_score_val,
-    "Parent_Support_Score": parent_support_score_val
-}])
+    # Encode inputs
+    raw_input = pd.DataFrame([{
+        "Gender": gender,
+        "Age": age,
+        "Department": department,
+        "Attendance (%)": attendance,
+        "Midterm_Score": midterm_score,
+        "Final_Score": final_score,
+        "Assignments_Avg": assignments_avg,
+        "Quizzes_Avg": quizzes_avg,
+        "Participation_Score": participation_score,
+        "Projects_Score": projects_score,
+        "Total_Score": total_score,
+        "Grade": grade,
+        "Study_Hours_per_Week": study_hours_per_week,
+        "Extracurricular_Activities": extracurricular_activities,
+        "Internet_Access_at_Home": internet_access_at_home,
+        "Parent_Education_Level": parent_education_level,
+        "Family_Income_Level": family_income_level,
+        "Stress_Level (1-10)": stress_level,
+        "Sleep_Hours_per_Night": sleep_hours_per_night,
+        "Study_Efficiency": study_efficiency_val,
+        "Parent_Education_Score": parent_edu_score_val,
+        "Internet_Score": internet_score_val,
+        "Parent_Support_Score": parent_support_score_val
+    }])
 
 # Encode categorical columns using saved encoders
 input_df = raw_input.copy()
@@ -382,6 +381,7 @@ st.pyplot(fig)
 
 
     
+
 
 
 
