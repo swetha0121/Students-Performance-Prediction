@@ -241,7 +241,7 @@ st.sidebar.info(tab1)
 st.sidebar.info(tab2)
 st.sidebar.info(tab3)
 st.subheader(" Dataset Preview")
-st.dataframe(df)-
+st.dataframe(df)
 
 
 # Use same mappings as in training
@@ -366,5 +366,6 @@ if submit:
 
 
     
+
 
 
