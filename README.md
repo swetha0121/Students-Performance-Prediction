@@ -160,8 +160,8 @@ pip install -r requirements.txt
 streamlit run Students_Performance.py
 ```
 
-Then open the displayed local URL, usually:
-http://localhost:8501
+You can open the Streamlit app:
+https://swetha0121-students-performance-pre-students-performance-5xlwel.streamlit.app/
 
 ## Sample Prediction
 ```
