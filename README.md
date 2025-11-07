@@ -24,34 +24,104 @@ This project aims to automate this prediction and help educators identify studen
 ---
 
 ##  Key Features
--- Data Cleaning and Preprocessing  
--- Outlier Detection and Removal  
--- Feature Engineering  
--- Label Encoding and Scaling  
-* Model Building using **Logistic Regression** and **Random Forest**  
-✅ Hyperparameter Tuning using **GridSearchCV**  
-✅ Model Evaluation with ROC-AUC and Cross-Validation  
-✅ Feature Importance Visualization  
-✅ (Bonus) Interactive **Streamlit App** for real-time prediction  
+- Data Cleaning and Preprocessing  
+- Outlier Detection and Removal  
+- Feature Engineering
+- Label Encoding and Scaling  
+- Model Building using **Logistic Regression** and **Random Forest**  
+- Hyperparameter Tuning using **GridSearchCV**  
+- Model Evaluation with ROC-AUC and Cross-Validation  
+- Feature Importance Visualization  
+- (Bonus) Interactive **Streamlit App** for real-time prediction  
 
 ---
 
-## 🧠 Machine Learning Workflow
+##  Machine Learning Workflow
 
-### 1️⃣ Data Understanding
+###  Data Understanding
 - Load dataset and explore structure (`info()`, `describe()`)
 - Handle missing values
 - Fix inconsistent categorical entries (e.g., `male → Male`)
 
-### 2️⃣ Data Cleaning
+###  Data Cleaning
 - Replace missing education levels with “No High School”
 - Drop duplicate entries
 - Remove irrelevant columns like `Email`, `First_Name`, etc.
 
-### 3️⃣ Outlier Detection
+###  Outlier Detection
 - Boxplots for numeric columns
 - IQR method to remove extreme values
 
-### 4️⃣ Feature Engineering
+###  Feature Engineering
 Created new informative features:
-- **Study_Efficiency** = Total_Score / (Stud_**_**
+- **Study_Efficiency** = Total_Score / (Study_Hours * Attendance)
+- **Parent_Support_Score** = 0.7 × Parent_Education + 0.3 × Internet_Access
+
+###  Encoding and Scaling
+- Used `LabelEncoder()` for categorical variables
+- Scaled numerical features using `StandardScaler`
+
+###  Model Building
+Trained two classification models:
+- **Logistic Regression**
+- **Random Forest Classifier**
+
+###  Model Evaluation
+Metrics used:
+- Accuracy
+- ROC-AUC Score
+- Classification Report
+- Confusion Matrix
+- ROC Curve Visualization
+
+###  Hyperparameter Tuning
+Optimized Random Forest parameters (`n_estimators`, `max_depth`, etc.) using `GridSearchCV`.
+
+###  Feature Importance
+Identified the top contributing features to the model’s predictions:
+- Total_Score  
+- Study_Hours_per_Week  
+- Attendance (%)  
+- Stress_Level (1-10)  
+- Sleep_Hours_per_Night  
+
+---
+
+##  Technologies Used
+
+| Category | Tools & Libraries |
+|-----------|------------------|
+| Programming | Python  |
+| Data Handling | pandas, numpy |
+| Visualization | matplotlib, seaborn, plotly |
+| Machine Learning | scikit-learn |
+| Model Persistence | joblib |
+| Web App (optional) | Streamlit |
+
+---
+
+##  Dataset Information
+The dataset `Students_Performance_Dataset.csv` includes:
+- Academic details (scores, attendance)
+- Behavioral metrics (study hours, stress level)
+- Parental and socio-economic details
+- Target column: **Result** (Pass/Fail)
+
+---
+
+## 🧪 Model Training Steps
+
+```python
+# Split the data
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Train models
+model_l = LogisticRegression(max_iter=1000)
+model_r = RandomForestClassifier(random_state=42)
+
+model_l.fit(X_train, y_train)
+model_r.fit(X_train, y_train)
+
+# Evaluate
+y_pred = model_r.predict(X_test)
+print("Accuracy:", accuracy_score(y_test, y_pred))
