@@ -201,7 +201,8 @@ with tab1:
     st.metric("Average Score", "82%")
     st.success("All systems running smoothly ✅")
 
-# ----- Tab 2: Data Insights -----
+# ----- Tab 2: Data Insights ----
+
 with tab2:
     st.header(" Data Insights")
     fig = px.scatter(df, x="Study_Hours_per_Week", y="Total_Score", color="Result", size="Attendance (%)", hover_data=["Department", "Grade"], title="📈 Study Hours vs Total Score (by Result)")
@@ -213,15 +214,9 @@ with tab2:
     fig = px.bar(df, x="Department", y="Total_Score", color="Result", barmode="group", title="🏫 Department-wise Average Score")
     st.plotly_chart(fig, use_container_width=True)
 
-# ----- Tab 3: Prediction -----
-with tab3:
-    st.header(" Prediction Area")
-    st.text_input("Enter student name")
-    st.slider("Study Hours per Week", 0, 40, 10)
-    st.button("Predict")
 
-# ----- Tab 4: Feature Importance -----
-with tab4:
+# ----- Tab 3: Feature Importance -----
+with tab3:
     st.header(" Feature Importance")
     feature_importance = pd.DataFrame({
         'Feature': X.columns,
@@ -242,9 +237,11 @@ col2.metric("Pass Rate", f"{(df_no['Result'].mean()*100):.1f}%")
 col3.metric("Avg Stress Level", round(df_clean["Stress_Level (1-10)"].mean(),1))
 
 st.sidebar.title(" Navigation")
-st.sidebar.info("Use the tabs above to explore data insights and predictions.")
+st.sidebar.info(tab1)
+st.sidebar.info(tab2)
+st.sidebar.info(tab3)
 st.subheader(" Dataset Preview")
-st.dataframe(df)
+st.dataframe(df)-
 
 
 # Use same mappings as in training
@@ -369,4 +366,5 @@ if submit:
 
 
     
+
 
