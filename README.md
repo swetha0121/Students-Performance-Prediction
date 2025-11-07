@@ -162,3 +162,8 @@ streamlit run Students_Performance.py
 
 Then open the displayed local URL, usually:
 http://localhost:8501
+
+## Sample Prediction
+```
+🎉 The student is likely to PASS (Confidence: 89.45%)
+```
