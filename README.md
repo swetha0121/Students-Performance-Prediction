@@ -137,22 +137,26 @@ This allows easy reuse in prediction apps or Streamlit dashboards.
 
 ## Installation & Setup
 ### Clone the Repository
+```bash
 git clone https://github.com/<your-username>/Students_Performance.git
 cd Students_Performance
+```
 
 ### Create a Virtual Environment (Recommended)
+```bash
 python -m venv venv
 venv\Scripts\activate        # On Windows
 # OR
 source venv/bin/activate     # On macOS/Linux
+```
 
 ### Install Dependencies
-```python
+```bash
 pip install -r requirements.txt
 ```
 
 ## Run the Streamlit App
-```python
+```bash
 streamlit run Students_Performance.py
 ```
 
