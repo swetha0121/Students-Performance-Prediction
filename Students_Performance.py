@@ -241,14 +241,18 @@ st.set_page_config(page_title="Student Performance Dashboard", layout="wide")
 
 # Sidebar Navigation
 menu = st.sidebar.radio( " Navigation", ["🏠 Overview", "📊 Data Insights", "🔮 Prediction", "⚙️ Feature Importance"])
-if menu == "🏠 Overview":st.header("🏠 Overview")
+if menu == "🏠 Overview":
+    st.header("🏠 Overview")
     st.dataframe(df)
-elif menu == "📊 Data Insights":st.header("📊 Data Insights")
-st.bar_chart(df["Attendance (%)"])
-elif menu == "🔮 Prediction":st.header(" Prediction")
-st.write("Model prediction section coming soon...")
-elif menu == "⚙️ Feature Importance":st.header(" Feature Importance")
-st.bar_chart(df[["Midterm_Score", "Final_Score"]])
+elif menu == "📊 Data Insights":
+    st.header("📊 Data Insights")
+    st.bar_chart(df["Attendance (%)"])
+elif menu == "🔮 Prediction":
+    st.header(" Prediction")
+    st.write("Model prediction section coming soon...")
+elif menu == "⚙️ Feature Importance":
+    st.header(" Feature Importance")
+    st.bar_chart(df[["Midterm_Score", "Final_Score"]])
 st.sidebar.title(" Navigation")
 st.sidebar.radio(tab1)
 st.sidebar.info(tab2)
@@ -379,6 +383,7 @@ if submit:
 
 
     
+
 
 
 
