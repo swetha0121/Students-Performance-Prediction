@@ -192,7 +192,7 @@ st.set_page_config(page_title="🎓 Student Performance Predictor", layout="cent
 st.title("Student Performance Predictor")
 st.write("Enter student details to predict Pass/Fail:")
 
-tab1, tab2, tab3 = st.tabs(["🏠 Overview", "📊 Data Insights", "⚙️ Feature Importance"])
+tab1, tab2, tab3, tab4 = st.tabs(["🏠 Overview", "📊 Data Insights", "Data Preview", "⚙️ Feature Importance"])
 
 # ----- Tab 1: Overview -----
 with tab1:
@@ -213,12 +213,14 @@ with tab2:
 
     fig = px.bar(df, x="Department", y="Total_Score", color="Result", barmode="group", title="🏫 Department-wise Average Score")
     st.plotly_chart(fig, use_container_width=True)
+
+with tab3:
     st.header("Data Preview")
     st.dataframe(df)
 
 
 # ----- Tab 3: Feature Importance -----
-with tab3:
+with tab4:
     st.header(" Feature Importance")
     feature_importance = pd.DataFrame({
         'Feature': X.columns,
@@ -240,25 +242,6 @@ col3.metric("Avg Stress Level", round(df_clean["Stress_Level (1-10)"].mean(),1))
 
 
 st.set_page_config(page_title="Student Performance Dashboard", layout="wide")
-
-# Sidebar Navigation
-# menu = st.sidebar.radio( " Navigation", ["🏠 Overview", "📊 Data Insights", "🔮 Prediction", "⚙️ Feature Importance"])
-# if menu == "🏠 Overview":
-#     st.header("🏠 Overview")
-#     st.metric("Total Students", 150)
-#     st.metric("Average Score", "82%")
-#     st.success("All systems running smoothly ✅")
-#     st.dataframe(df)
-# elif menu == "📊 Data Insights":
-#     st.header("📊 Data Insights")
-#     st.bar_chart(df["Attendance (%)"])
-# elif menu == "🔮 Prediction":
-#     st.header(" Prediction")
-#     st.write("Model prediction section coming soon...")
-# elif menu == "⚙️ Feature Importance":
-#     st.header(" Feature Importance")
-#     st.bar_chart(df[["Midterm_Score", "Final_Score"]])
-
 
 
 # Use same mappings as in training
@@ -379,6 +362,7 @@ if submit:
 
 
     
+
 
 
 
