@@ -348,11 +348,11 @@ with tab3:
         prediction = model.predict(input_df)
         probability = model.predict_proba(input_df)[0][1]  # class 1 = PASS
         # Display Result
-         st.markdown("---")
-         if prediction[0] == 1:
-             st.success(f"🎉 The student is likely to **PASS** (Confidence: {probability*100:.2f}%)")
-         else:
-             st.error(f"❌ The student is likely to **FAIL** (Confidence: {(1-probability)*100:.2f}%)")
+        st.markdown("---")
+        if prediction[0] == 1:
+            st.success(f"🎉 The student is likely to **PASS** (Confidence: {probability*100:.2f}%)")
+        else:
+            st.error(f"❌ The student is likely to **FAIL** (Confidence: {(1-probability)*100:.2f}%)")
              
         st.subheader("Prediction Probability") 
         labels = ["Fail", "Pass"] 
@@ -378,6 +378,7 @@ with tab3:
 
 
     
+
 
 
 
