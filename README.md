@@ -167,3 +167,15 @@ http://localhost:8501
 ```
 🎉 The student is likely to PASS (Confidence: 89.45%)
 ```
+
+## Acknowledgements
+
+Special thanks to:
+
+- Scikit-learn for ML utilities
+
+- Streamlit for fast web visualization
+
+- Plotly for interactive plots
+
+#### “Predicting success is not about data alone — it’s about enabling every student to reach their potential.”
