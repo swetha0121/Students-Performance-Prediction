@@ -192,7 +192,7 @@ st.set_page_config(page_title="🎓 Student Performance Predictor", layout="cent
 st.title("Student Performance Predictor")
 st.write("Enter student details to predict Pass/Fail:")
 
-tab1, tab2, tab3, tab4 = st.tabs(["🏠 Overview", "📊 Data Insights", "Data Preview", "⚙️ Feature Importance"])
+tab1, tab2, tab3, tab4 = st.tabs(["🏠 Overview", "📊 Data Insights", "📁 Dataset", "⚙️ Feature Importance"])
 
 # ----- Tab 1: Overview -----
 with tab1:
@@ -215,9 +215,12 @@ with tab2:
     st.plotly_chart(fig, use_container_width=True)
 
 with tab3:
-    st.header("Data Preview")
-    st.dataframe(df)
-
+    st.header(" Dataset Viewer")
+    st.write("Here’s the student performance dataset used for analysis and prediction:")
+    st.dataframe(df)  # ✅ displays the full dataset interactively
+    st.markdown("### 🔍 Dataset Info")
+    st.write(f"**Rows:** {df.shape[0]} | **Columns:** {df.shape[1]}")
+    st.write("**Columns:**", list(df.columns))
 
 # ----- Tab 3: Feature Importance -----
 with tab4:
@@ -362,6 +365,7 @@ if submit:
 
 
     
+
 
 
 
