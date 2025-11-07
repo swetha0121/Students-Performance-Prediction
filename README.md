@@ -109,7 +109,7 @@ The dataset `Students_Performance_Dataset.csv` includes:
 
 ---
 
-## 🧪 Model Training Steps
+##  Model Training Steps
 
 ```python
 # Split the data
@@ -125,3 +125,5 @@ model_r.fit(X_train, y_train)
 # Evaluate
 y_pred = model_r.predict(X_test)
 print("Accuracy:", accuracy_score(y_test, y_pred))
+exit
+
