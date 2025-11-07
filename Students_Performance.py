@@ -189,16 +189,6 @@ NUMERIC_COLS = pipeline["numeric_cols"]
 
 st.set_page_config(page_title="🎓 Student Performance Predictor", layout="centered")
 
-joblib.dump(model_r, "best_model.pkl")
-
-# print(os.getcwd())  # Current directory
-# print(os.listdir()) # Files in current directory
-
-# @st.cache_resource
-# def load_model():
-#     return joblib.load("best_model.pkl")
-# # model.feature_names_in_
-# model = load_model()
 st.title("Student Performance Predictor")
 st.write("Enter student details to predict Pass/Fail:")
 
@@ -206,14 +196,14 @@ tab1, tab2, tab3, tab4 = st.tabs(["🏠 Overview", "📊 Data Insights", "🔮 P
 
 # ----- Tab 1: Overview -----
 with tab1:
-    st.title("🏠 Overview Dashboard")
+    st.title(" Overview Dashboard")
     st.metric("Total Students", 150)
     st.metric("Average Score", "82%")
     st.success("All systems running smoothly ✅")
 
 # ----- Tab 2: Data Insights -----
 with tab2:
-    st.header("📊 Data Insights")
+    st.header(" Data Insights")
     fig = px.scatter(df, x="Study_Hours_per_Week", y="Total_Score", color="Result", size="Attendance (%)", hover_data=["Department", "Grade"], title="📈 Study Hours vs Total Score (by Result)")
     st.plotly_chart(fig, use_container_width=True)
 
@@ -225,14 +215,14 @@ with tab2:
 
 # ----- Tab 3: Prediction -----
 with tab3:
-    st.header("🔮 Prediction Area")
+    st.header(" Prediction Area")
     st.text_input("Enter student name")
     st.slider("Study Hours per Week", 0, 40, 10)
     st.button("Predict")
 
 # ----- Tab 4: Feature Importance -----
 with tab4:
-    st.header("⚙️ Feature Importance")
+    st.header(" Feature Importance")
     feature_importance = pd.DataFrame({
         'Feature': X.columns,
         'Importance': model.feature_importances_
@@ -251,8 +241,10 @@ col1.metric("Avg Study Hours", round(df_clean["Study_Hours_per_Week"].mean(),1))
 col2.metric("Pass Rate", f"{(df_no['Result'].mean()*100):.1f}%")
 col3.metric("Avg Stress Level", round(df_clean["Stress_Level (1-10)"].mean(),1))
 
-st.sidebar.title("🔍 Navigation")
+st.sidebar.title(" Navigation")
 st.sidebar.info("Use the tabs above to explore data insights and predictions.")
+st.subheader(" Dataset Preview")
+st.dataframe(df)
 
 
 # Use same mappings as in training
@@ -377,3 +369,4 @@ if submit:
 
 
     
+
