@@ -83,16 +83,14 @@ df_no['Parent_Support_Score'] = (df_no['Parent_Education_Score']*0.7 + df_no['In
 print(df_no[['Study_Efficiency', 'Parent_Support_Score']].head())
 
 # ---------Encoding-----------
-Encode = LabelEncoder()
 categorical_cols = list(df.select_dtypes(include=['object']).columns)
 categorical_cols = [col for col in categorical_cols if col in df_no.columns] 
 encoders = {}
 
 for col in categorical_cols:
-    
-    df_no[col] = Encode.fit_transform(df_no[col].astype(str))
-    encoders[col] = Encode
-
+    le = LabelEncoder() 
+    df_no[col] = le.fit_transform(df_no[col].astype(str))
+    encoders[col] = le
 # ----------Feature Scaling----------
 
 # Split data
@@ -375,6 +373,7 @@ if submit:
     st.pyplot(fig)
 
     
+
 
 
     
