@@ -5,4 +5,5 @@ scikit-learn
 plotly
 matplotlib
 seaborn
+imbalanced-learn
 
