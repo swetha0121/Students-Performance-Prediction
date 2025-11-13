@@ -161,13 +161,15 @@ for name, model in models.items():
 param_grid = {'n_estimators': [100, 200], 'max_depth': [None, 5, 10, 15],'min_samples_split': [2, 5, 10]}
 grid = GridSearchCV(model_r, param_grid, cv=5, scoring='accuracy', n_jobs=-1)
 grid.fit(X_train, y_train)
-# If we want slightly smoother results, you can also:
-best_rf.set_params(class_weight='balanced', random_state=42)
+
 print("\n Best Random Forest Parameters:", grid.best_params_)
 print("Best Accuracy from GridSearchCV:", grid.best_score_)
 
 # -------------Model Interpretation (Feature Importance)-----------
 best_rf = grid.best_estimator_
+# If we want slightly smoother results, you can also:
+best_rf.set_params(class_weight='balanced', random_state=42)
+
 feat_imp = pd.Series(best_rf.feature_importances_, index=X.columns).sort_values(ascending=False)
 plt.figure(figsize=(10, 5))
 feat_imp[:10].plot(kind='bar', color='teal')
@@ -382,6 +384,7 @@ if submit:
 
 
     
+
 
 
 
