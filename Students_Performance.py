@@ -269,7 +269,7 @@ grade_map = {'A':4, 'B':3, 'C':2, 'D':1, 'F':0}
 yes_no_map = {'Yes': 1, 'No': 0}
 family_income_map = {'Low': 0, 'Medium': 1, 'High': 2}
 
-with st.form("prediction_form"):
+with tab1:
     gender = st.selectbox("Gender", ["Male", "Female"])
     age = st.number_input("Age", min_value=10, max_value=25, value=18)
     department = st.selectbox("Department", ['Mathematics', 'Business', 'Engineering', 'CS'])
@@ -384,6 +384,7 @@ if submit:
 
 
     
+
 
 
 
