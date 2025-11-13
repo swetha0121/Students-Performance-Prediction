@@ -269,8 +269,8 @@ grade_map = {'A':4, 'B':3, 'C':2, 'D':1, 'F':0}
 yes_no_map = {'Yes': 1, 'No': 0}
 family_income_map = {'Low': 0, 'Medium': 1, 'High': 2}
 
-# ----- 🎯 Tab 5: Prediction Form -----
-with tab5:
+# ----- 🎯 Tab 1: Prediction Form -----
+with tab1:
     st.header("🎯 Student Performance Prediction")
     with st.form("Prediction_form"):
         gender = st.selectbox("Gender", ["Male", "Female"])
@@ -383,3 +383,4 @@ with tab5:
         ax.legend()
 
     st.pyplot(fig)
+
