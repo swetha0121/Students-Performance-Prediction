@@ -175,7 +175,7 @@ plt.show()
 print("\nTop 10 Important Features:\n", feat_imp.head(10))
 
 pipeline = {
-    "model": model_r,
+    "model": best_rf,
     "scaler": Scaler,
     "encoders": encoders,
     "features": X.columns.tolist(),
@@ -380,6 +380,7 @@ if submit:
 
 
     
+
 
 
 
