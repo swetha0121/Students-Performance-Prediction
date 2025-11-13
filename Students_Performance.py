@@ -7,6 +7,7 @@ from sklearn.preprocessing import LabelEncoder, StandardScaler
 from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix, roc_auc_score, roc_curve
+from imblearn.over_sampling import SMOTE
 import streamlit as st
 import joblib
 import os
@@ -373,6 +374,7 @@ if submit:
 
 
     
+
 
 
 
