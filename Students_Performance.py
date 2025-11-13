@@ -84,8 +84,8 @@ df_no['Parent_Support_Score'] = (df_no['Parent_Education_Score']*0.7 + df_no['In
 print(df_no[['Study_Efficiency', 'Parent_Support_Score']].head())
 
 # ---------Encoding-----------
-categorical_cols = list(df.select_dtypes(include=['object']).columns)
-categorical_cols = [col for col in categorical_cols if col in df_no.columns] 
+categorical_cols = list(df_no.select_dtypes(include=['object']).columns)
+# categorical_cols = [col for col in categorical_cols if col in df_no.columns] 
 encoders = {}
 
 for col in categorical_cols:
@@ -107,6 +107,11 @@ X[numeric_cols] = Scaler.fit_transform(X[numeric_cols])
 # Handle imbalance using SMOTE
 sm = SMOTE(random_state=42)
 X_res, y_res = sm.fit_resample(X, y)
+
+
+#  Check class balance after SMOTE
+print("\nBalanced Target Counts:\n", y_res.value_counts())
+
 # split + train test model
 X_train, X_test, y_train, y_test = train_test_split(X_res, y_res, test_size=0.2, random_state=42)
 print("\nTrain size:", X_train.shape, "Test size:", X_test.shape)
@@ -170,7 +175,7 @@ plt.show()
 print("\nTop 10 Important Features:\n", feat_imp.head(10))
 
 pipeline = {
-    "model": best_rf,
+    "model": model_r,
     "scaler": Scaler,
     "encoders": encoders,
     "features": X.columns.tolist(),
@@ -375,6 +380,7 @@ if submit:
 
 
     
+
 
 
 
