@@ -223,7 +223,7 @@ with tab2:
 with tab3:
     st.header(" Dataset Viewer")
     st.write("Here’s the student performance dataset used for analysis and prediction:")
-    st.dataframe(df)  # ✅ displays the full dataset interactively
+    st.dataframe(df)  #  displays the full dataset interactively
     st.markdown("### 🔍 Dataset Info")
     st.write(f"**Rows:** {df.shape[0]} | **Columns:** {df.shape[1]}")
     st.write("**Columns:**", list(df.columns))
@@ -353,7 +353,8 @@ if submit:
     st.subheader("Prediction Probability") 
     labels = ["Fail", "Pass"] 
     probabilities = [1-probability, probability] 
-    fig, ax = plt.subplots() 
+    
+    fig, ax = plt.subplots(figsize=(6, 3)) 
     ax.barh(labels, probabilities, color=['red','green']) 
     for i, v in enumerate(probabilities): 
         ax.text(v + 0.01, i, f"{v:.1%}", va='center') 
@@ -361,7 +362,7 @@ if submit:
     st.pyplot(fig) 
         
     st.subheader("Student Context")
-    fig, ax = plt.subplots()
+    fig, ax = plt.subplots(figsize=(6, 3))
     ax.scatter(df['Study_Hours_per_Week'], df['Total_Score'], alpha=0.5)
     ax.scatter(study_hours_per_week, total_score, color='red', label="Current Student")
     ax.set_xlabel("Study Hours per Week")
@@ -374,6 +375,7 @@ if submit:
 
 
     
+
 
 
 
