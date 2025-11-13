@@ -158,9 +158,11 @@ for name, model in models.items():
     cv_scores = cross_val_score(model, X, y, cv=5, scoring='accuracy')
     print(f"{name} Cross-Validation Accuracy: {cv_scores.mean():.4f} ± {cv_scores.std():.4f}")
 
-param_grid = {'n_estimators': [100, 200, 300], 'max_depth': [None, 10, 20, 30],'min_samples_split': [2, 5, 10]}
+param_grid = {'n_estimators': [100, 200], 'max_depth': [None, 5, 10, 15],'min_samples_split': [2, 5, 10]}
 grid = GridSearchCV(model_r, param_grid, cv=5, scoring='accuracy', n_jobs=-1)
 grid.fit(X_train, y_train)
+# If we want slightly smoother results, you can also:
+best_rf.set_params(class_weight='balanced', random_state=42)
 print("\n Best Random Forest Parameters:", grid.best_params_)
 print("Best Accuracy from GridSearchCV:", grid.best_score_)
 
@@ -380,6 +382,7 @@ if submit:
 
 
     
+
 
 
 
