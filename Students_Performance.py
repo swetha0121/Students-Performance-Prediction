@@ -382,7 +382,8 @@ with tab5:
         ax.set_ylabel("Total Score")
         ax.legend()
 
-    st.pyplot(fig)
+        st.pyplot(fig)
+
 
 
 
