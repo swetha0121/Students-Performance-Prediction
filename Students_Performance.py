@@ -207,7 +207,7 @@ st.title("Student Performance Predictor")
 
 st.write("Enter student details to predict Pass/Fail:")
 
-tab1, tab2, tab3, tab4, tab5 = st.tabs(["🏠 Overview", "📊 Data Insights", "📁 Dataset", "⚙️ Feature Importance", "🎯 Prediction])
+tab1, tab2, tab3, tab4, tab5 = st.tabs(["🏠 Overview", "📊 Data Insights", "📁 Dataset", "⚙️ Feature Importance", "🎯 Prediction"])
 
 # ----- Tab 1: Overview -----
 with tab1:
@@ -270,8 +270,8 @@ yes_no_map = {'Yes': 1, 'No': 0}
 family_income_map = {'Low': 0, 'Medium': 1, 'High': 2}
 
 # ----- 🎯 Tab 1: Prediction Form -----
-with tab5:
-    st.header("🎯 Student Performance Prediction")
+# with tab5:
+#     st.header("🎯 Student Performance Prediction")
     with st.form("Prediction_form"):
         gender = st.selectbox("Gender", ["Male", "Female"])
         age = st.number_input("Age", min_value=10, max_value=25, value=18)
@@ -383,5 +383,6 @@ with tab5:
         ax.legend()
 
     st.pyplot(fig)
+
 
 
