@@ -346,7 +346,7 @@ with tab5:
             # "Stress_Level (1-10)": stress_level,
             # "Sleep_Hours_per_Night": sleep_hours_per_night,
             "Study_Efficiency": study_efficiency,
-            "Parent_Education_Score": parent_edu_score_val,
+            # "Parent_Education_Score": parent_edu_score_val,
             "Internet_Score": internet_score_val,
             "Parent_Support_Score": parent_support_score_val
         }])
@@ -405,6 +405,7 @@ with tab5:
         ax.legend()
         st.pyplot(fig, use_container_width=False)
         
+
 
 
 
