@@ -231,16 +231,17 @@ with tab2:
     fig = px.bar(df, x="Department", y="Total_Score", color="Result", barmode="group", title="🏫 Department-wise Average Score")
     st.plotly_chart(fig, use_container_width=True)
     
-    st.subheader("1️⃣ Pie Chart: Parent Education Level Distribution")
-    pie_data = df["Parent_Education_Level"].value_counts()
+    st.subheader("Parent Education Level Distribution")
+    parent_data = df["Parent_Education_Level"].value_counts()
     fig1, ax1 = plt.subplots()
-    ax1.pie(
-        pie_data.values,
-        labels=pie_data.index,
-        autopct="%1.1f%%",
-        startangle=90
-    )
-    ax1.axis("equal")
+    ax1.bar(
+        parent_data.values,
+        labels=parent_data.index
+    )    
+    ax1.set_xlabel("Parent Education Level")
+    ax1.set_ylabel("Number of Students")
+    # plt.xticks(rotation=45)
+    st.pyplot(fig1)
     st.pyplot(fig1)
 with tab3:
     st.header(" Dataset Viewer")
@@ -408,16 +409,8 @@ with tab5:
         st.pyplot(fig, use_container_width=False)
        
         
-        # Scatter plot
-        st.subheader("Student Context")
-        fig, ax = plt.subplots(figsize=(6, 2.5))
-        ax.scatter(df['Study_Hours_per_Week'], df['Total_Score'], alpha=0.5)
-        ax.scatter(study_hours_per_week, total_score, color='red', label="Current Student")
-        ax.set_xlabel("Study Hours per Week")
-        ax.set_ylabel("Total Score")
-        ax.legend()
-        st.pyplot(fig, use_container_width=False)
         
+
 
 
 
