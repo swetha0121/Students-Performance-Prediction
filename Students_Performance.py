@@ -275,9 +275,7 @@ with tab5:
     st.write("Enter student details to predict Pass/Fail:")
 
     with st.form("Prediction_form"):
-        # gender = st.selectbox("Gender", ["Male", "Female"])
-        # age = st.number_input("Age", min_value=10, max_value=25, value=18)
-        # department = st.selectbox("Department", ['Mathematics', 'Business', 'Engineering', 'CS'])
+        
         attendance = st.number_input("Attendance (%)", min_value=0, max_value=100, value=90)
         midterm_score = st.number_input("Midterm Score", min_value=0, max_value=100, value=75)
         final_score = st.number_input("Final Score", min_value=0, max_value=100, value=80)
@@ -285,15 +283,6 @@ with tab5:
         quizzes_avg = st.number_input("Quizzes Avg", min_value=0, max_value=100, value=80)
         participation_score = st.number_input("Participation Score", min_value=0, max_value=10, value=8)
         projects_score = st.number_input("Projects Score", min_value=0, max_value=100, value=90)
-        # total_score = st.number_input("Total Score", min_value=0, max_value=500, value=330)
-        # grade = st.selectbox("Grade", ["A", "B", "C", "D", "F"])
-        # study_hours_per_week = st.number_input("Study Hours per Week", min_value=0, max_value=100, value=15)
-        # extracurricular_activities = st.selectbox("Extracurricular Activities", ["Yes", "No"])
-        # internet_access_at_home = st.selectbox("Internet Access at Home", ["Yes", "No"])
-        # parent_education_level = st.selectbox("Parent Education Level", ["No High School","High School", "Bachelor's", "Master's", "PhD"])
-        # family_income_level = st.selectbox("Family Income Level", ["Low", "Medium", "High"])
-        # stress_level = st.slider("Stress Level (1-10)", min_value=1, max_value=10, value=5)
-        # sleep_hours_per_night = st.number_input("Sleep Hours per Night", min_value=0, max_value=12, value=7)
     
     
         submit = st.form_submit_button("Predict")
@@ -311,21 +300,11 @@ with tab5:
 
         grade = get_grade(total_score)
         study_efficiency = total_score / (attendance + 1)
-        # study_efficiency = total_score / (midterm_score + final_score + assignments_avg + quizzes_avg + participation_score + projects_score + 1)
-        # grade = get_grade(total_score)
+       
         parent_support_score_val = 0.5   # default fixed value
         internet_score_val = 0.5
-        # parent_edu_score_map = 2
-        # parent_edu_score_map = {'No High School':0, 'High School':1, "Bachelor's":2, "Master's":3, 'PhD':4}
-        # parent_edu_score_val = parent_edu_score_map[parent_education_level]
-        # internet_score_val = 1 if internet_access_at_home == "Yes" else 0
-        # parent_support_score_val = parent_edu_score_val * 0.7 + internet_score_val * 0.3
-        # study_efficiency_val = total_score / (study_hours_per_week * attendance + 1)
-        # Encode inputs
+       
         raw_input = pd.DataFrame([{
-            # "Gender": gender,
-            # "Age": age,
-            # "Department": department,
             "Attendance (%)": attendance,
             "Midterm_Score": midterm_score,
             "Final_Score": final_score,
@@ -335,15 +314,7 @@ with tab5:
             "Projects_Score": projects_score,
             "Total_Score": total_score,
             "Grade": grade,
-            # "Study_Hours_per_Week": study_hours_per_week,
-            # "Extracurricular_Activities": extracurricular_activities,
-            # "Internet_Access_at_Home": internet_access_at_home,
-            # "Parent_Education_Level": parent_education_level,
-            # "Family_Income_Level": family_income_level,
-            # "Stress_Level (1-10)": stress_level,
-            # "Sleep_Hours_per_Night": sleep_hours_per_night,
             "Study_Efficiency": study_efficiency,
-            # "Parent_Education_Score": parent_edu_score_val,
             "Internet_Score": internet_score_val,
             "Parent_Support_Score": parent_support_score_val
         }])
@@ -400,6 +371,7 @@ with tab5:
        
         
         
+
 
 
 
