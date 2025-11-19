@@ -366,7 +366,7 @@ with tab5:
         labels = ["Fail", "Pass"] 
         probabilities = [1-probability, probability] 
     
-        fig, ax = plt.subplots(figsize=(6, 3)) 
+        fig, ax = plt.subplots(figsize=(5, 2)) 
         ax.barh(labels, probabilities, color=['red','green']) 
         for i, v in enumerate(probabilities): 
             ax.text(v + 0.01, i, f"{v:.1%}", va='center') 
@@ -375,7 +375,7 @@ with tab5:
         
         # Scatter plot
         st.subheader("Student Context")
-        fig, ax = plt.subplots(figsize=(6, 3))
+        fig, ax = plt.subplots(figsize=(5, 2))
         ax.scatter(df['Study_Hours_per_Week'], df['Total_Score'], alpha=0.5)
         ax.scatter(study_hours_per_week, total_score, color='red', label="Current Student")
         ax.set_xlabel("Study Hours per Week")
@@ -383,6 +383,7 @@ with tab5:
         ax.legend()
 
         st.pyplot(fig)
+
 
 
 
