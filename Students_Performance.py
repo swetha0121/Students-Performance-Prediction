@@ -234,15 +234,12 @@ with tab2:
     st.subheader("Parent Education Level Distribution")
     parent_data = df["Parent_Education_Level"].value_counts()
     fig1, ax1 = plt.subplots()
-    ax1.bar(
-        parent_data.values,
-        labels=parent_data.index
-    )    
+    ax1.bar(parent_data.index, parent_data.values)    
     ax1.set_xlabel("Parent Education Level")
     ax1.set_ylabel("Number of Students")
     # plt.xticks(rotation=45)
     st.pyplot(fig1)
-    st.pyplot(fig1)
+    
 with tab3:
     st.header(" Dataset Viewer")
     st.write("Here’s the student performance dataset used for analysis and prediction:")
@@ -410,6 +407,7 @@ with tab5:
        
         
         
+
 
 
 
