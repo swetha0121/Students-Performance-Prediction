@@ -280,7 +280,7 @@ def get_grade(total):
         return "B"
     else:
         return "A"
-df['Grade'] = df['Total'].apply(get_grade)   # Example usage
+df['Grade'] = df['Total_Score'].apply(get_grade)   # Example usage
 print(df)
 
 
@@ -405,6 +405,7 @@ with tab5:
         ax.legend()
         st.pyplot(fig, use_container_width=False)
         
+
 
 
 
