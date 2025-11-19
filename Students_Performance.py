@@ -205,8 +205,6 @@ st.set_page_config(page_title="🎓 Student Performance Predictor", layout="cent
 
 st.title("Student Performance Predictor")
 
-st.write("Enter student details to predict Pass/Fail:")
-
 tab1, tab2, tab3, tab4, tab5 = st.tabs(["🏠 Overview", "📊 Data Insights", "📁 Dataset", "⚙️ Feature Importance", "🎯 Prediction"])
 
 # ----- Tab 1: Overview -----
@@ -269,24 +267,11 @@ grade_map = {'A':4, 'B':3, 'C':2, 'D':1, 'F':0}
 yes_no_map = {'Yes': 1, 'No': 0}
 family_income_map = {'Low': 0, 'Medium': 1, 'High': 2}
 
-def get_grade(total):
-    if total < 60:
-        return "F"
-    elif total < 70:
-        return "D"
-    elif total < 80:
-        return "C"
-    elif total < 90:
-        return "B"
-    else:
-        return "A"
-df['Grade'] = df['Total_Score'].apply(get_grade)   # Example usage
-print(df)
-
-
 # ----- 🎯 Tab 5: Prediction Form -----
 with tab5:
     st.header("🎯 Student Performance Prediction")
+    st.write("Enter student details to predict Pass/Fail:")
+
     with st.form("Prediction_form"):
         # gender = st.selectbox("Gender", ["Male", "Female"])
         # age = st.number_input("Age", min_value=10, max_value=25, value=18)
@@ -298,7 +283,7 @@ with tab5:
         quizzes_avg = st.number_input("Quizzes Avg", min_value=0, max_value=100, value=80)
         participation_score = st.number_input("Participation Score", min_value=0, max_value=10, value=8)
         projects_score = st.number_input("Projects Score", min_value=0, max_value=100, value=90)
-        total_score = st.number_input("Total Score", min_value=0, max_value=500, value=330)
+        # total_score = st.number_input("Total Score", min_value=0, max_value=500, value=330)
         # grade = st.selectbox("Grade", ["A", "B", "C", "D", "F"])
         # study_hours_per_week = st.number_input("Study Hours per Week", min_value=0, max_value=100, value=15)
         # extracurricular_activities = st.selectbox("Extracurricular Activities", ["Yes", "No"])
@@ -313,12 +298,22 @@ with tab5:
 
         # Create input DataFrame with **exact column names** as in your training data
     if submit:
+        # ---- Calculate automatically ----
         total_score = np.mean([midterm_score, final_score, assignments_avg, quizzes_avg, participation_score, projects_score])
-        study_efficiency = total_score / (midterm_score + final_score + assignments_avg + quizzes_avg + participation_score + projects_score + 1)
+        def get_grade(total):
+            if total < 60: return "F"
+            elif total < 70: return "D"
+            elif total < 80: return "C"
+            elif total < 90: return "B"
+            else: return "A"
+
         grade = get_grade(total_score)
+        study_efficiency = total_score / (attendance + 1)
+        # study_efficiency = total_score / (midterm_score + final_score + assignments_avg + quizzes_avg + participation_score + projects_score + 1)
+        # grade = get_grade(total_score)
         parent_support_score_val = 0.5   # default fixed value
         internet_score_val = 0.5
-        parent_edu_score_map = 2
+        # parent_edu_score_map = 2
         # parent_edu_score_map = {'No High School':0, 'High School':1, "Bachelor's":2, "Master's":3, 'PhD':4}
         # parent_edu_score_val = parent_edu_score_map[parent_education_level]
         # internet_score_val = 1 if internet_access_at_home == "Yes" else 0
@@ -364,10 +359,17 @@ with tab5:
         for col in NUMERIC_COLS:
             if col in input_df.columns:
                 input_df[col] = pd.to_numeric(input_df[col], errors="coerce").fillna(0)
+                
+        # ---- Add missing columns automatically ----
+        for col in FEATURES:
+            if col not in input_df.columns:
+                input_df[col] = 0
+
         # Reorder and scale numeric columns
         input_df = input_df[FEATURES]
+        
         scaled_values = scaler.transform(input_df[NUMERIC_COLS])
-        input_df.loc[:, NUMERIC_COLS] = scaled_values
+        input_df[NUMERIC_COLS] = scaled_values
     
         # ensure feature order
         input_df = input_df.reindex(columns=FEATURES, fill_value=0)
@@ -405,6 +407,7 @@ with tab5:
         ax.legend()
         st.pyplot(fig, use_container_width=False)
         
+
 
 
 
