@@ -372,7 +372,7 @@ with tab5:
             ax.text(v + 0.01, i, f"{v:.1%}", va='center')  
         ax.set_xlim(0,1) 
         st.pyplot(fig, use_container_width=False)
-        st.pyplot(fig) 
+        plt.tight_layout()
         
         # Scatter plot
         st.subheader("Student Context")
@@ -383,15 +383,5 @@ with tab5:
         ax.set_ylabel("Total Score")
         ax.legend()
         st.pyplot(fig, use_container_width=False)
-        st.pyplot(fig)
-
-
-
-
-
-
-
-
-
-
+        plt.tight_layout()
 
