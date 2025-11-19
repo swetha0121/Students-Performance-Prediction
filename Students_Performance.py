@@ -314,7 +314,7 @@ with tab5:
         # Create input DataFrame with **exact column names** as in your training data
     if submit:
         total_score = np.mean([midterm_score, final_score, assignments_avg, quizzes_avg, participation_score, projects_score])
-        study_efficiency = total_score / (midterm_score + final_score + assignments_avg + quizzes_avg + paticipation_score + projects_score + 1)
+        study_efficiency = total_score / (midterm_score + final_score + assignments_avg + quizzes_avg + participation_score + projects_score + 1)
         grade = get_grade(total_score)
         parent_support_score_val = 0.5   # default fixed value
         internet_score_val = 0.5
@@ -405,6 +405,7 @@ with tab5:
         ax.legend()
         st.pyplot(fig, use_container_width=False)
         
+
 
 
 
