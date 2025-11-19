@@ -230,7 +230,18 @@ with tab2:
 
     fig = px.bar(df, x="Department", y="Total_Score", color="Result", barmode="group", title="🏫 Department-wise Average Score")
     st.plotly_chart(fig, use_container_width=True)
-
+    
+    st.subheader("1️⃣ Pie Chart: Parent Education Level Distribution")
+    pie_data = df["Parent_Education_Level"].value_counts()
+    fig1, ax1 = plt.subplots()
+    ax1.pie(
+        pie_data.values,
+        labels=pie_data.index,
+        autopct="%1.1f%%",
+        startangle=90
+    )
+    ax1.axis("equal")
+    st.pyplot(fig1)
 with tab3:
     st.header(" Dataset Viewer")
     st.write("Here’s the student performance dataset used for analysis and prediction:")
@@ -407,6 +418,7 @@ with tab5:
         ax.legend()
         st.pyplot(fig, use_container_width=False)
         
+
 
 
 
