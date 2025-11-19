@@ -215,6 +215,10 @@ with tab1:
     st.metric("Total Students", 150)
     st.metric("Average Score", "82%")
     st.success("All systems running smoothly ✅")
+    col1, col2, col3 = st.columns(3)
+    col1.metric("Avg Study Hours", round(df_clean["Study_Hours_per_Week"].mean(),1))
+    col2.metric("Pass Rate", f"{(df_no['Result'].mean()*100):.1f}%")
+    col3.metric("Avg Stress Level", round(df_clean["Stress_Level (1-10)"].mean(),1))
 
 # ----- Tab 2: Data Insights ----
 
@@ -253,10 +257,6 @@ with tab4:
                  title="Top Feature Importances in Student Performance Model")
     st.plotly_chart(fig, use_container_width=True)
     
-col1, col2, col3 = st.columns(3)
-col1.metric("Avg Study Hours", round(df_clean["Study_Hours_per_Week"].mean(),1))
-col2.metric("Pass Rate", f"{(df_no['Result'].mean()*100):.1f}%")
-col3.metric("Avg Stress Level", round(df_clean["Stress_Level (1-10)"].mean(),1))
 
 
 st.set_page_config(page_title="Student Performance Dashboard", layout="wide")
@@ -366,7 +366,7 @@ with tab5:
         labels = ["Fail", "Pass"] 
         probabilities = [1-probability, probability] 
     
-        fig, ax = plt.subplots(figsize=(5, 2)) 
+        fig, ax = plt.subplots(figsize=(6, 3)) 
         ax.barh(labels, probabilities, color=['red','green']) 
         for i, v in enumerate(probabilities): 
             ax.text(v + 0.01, i, f"{v:.1%}", va='center') 
@@ -375,7 +375,7 @@ with tab5:
         
         # Scatter plot
         st.subheader("Student Context")
-        fig, ax = plt.subplots(figsize=(3, 4))
+        fig, ax = plt.subplots(figsize=(6, 3))
         ax.scatter(df['Study_Hours_per_Week'], df['Total_Score'], alpha=0.5)
         ax.scatter(study_hours_per_week, total_score, color='red', label="Current Student")
         ax.set_xlabel("Study Hours per Week")
@@ -383,6 +383,7 @@ with tab5:
         ax.legend()
 
         st.pyplot(fig)
+
 
 
 
