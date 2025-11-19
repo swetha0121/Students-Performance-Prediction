@@ -337,7 +337,7 @@ with tab5:
             "Participation_Score": participation_score,
             "Projects_Score": projects_score,
             "Total_Score": total_score,
-            "Grade": "F" if total_score < 60 ,
+            "Grade": grade,
             # "Study_Hours_per_Week": study_hours_per_week,
             # "Extracurricular_Activities": extracurricular_activities,
             # "Internet_Access_at_Home": internet_access_at_home,
@@ -405,5 +405,6 @@ with tab5:
         ax.legend()
         st.pyplot(fig, use_container_width=False)
         
+
 
 
