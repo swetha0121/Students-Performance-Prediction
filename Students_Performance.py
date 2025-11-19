@@ -375,7 +375,7 @@ with tab5:
         
         # Scatter plot
         st.subheader("Student Context")
-        fig, ax = plt.subplots(figsize=(5, 2))
+        fig, ax = plt.subplots(figsize=(7, 4))
         ax.scatter(df['Study_Hours_per_Week'], df['Total_Score'], alpha=0.5)
         ax.scatter(study_hours_per_week, total_score, color='red', label="Current Student")
         ax.set_xlabel("Study Hours per Week")
@@ -383,6 +383,7 @@ with tab5:
         ax.legend()
 
         st.pyplot(fig)
+
 
 
 
