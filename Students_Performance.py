@@ -231,16 +231,7 @@ with tab2:
     fig = px.bar(df, x="Department", y="Total_Score", color="Result", barmode="group", title="🏫 Department-wise Average Score")
     st.plotly_chart(fig, use_container_width=True)
     
-    # st.subheader("Parent Education Level Distribution")
-    y = df["Parent_Education_Level"].value_counts()
-    fig = px.bar(df, x="Parent_Education_Level", title="Parental Educational Level Distribution")
-    st.plotly_chart(fig, use_container_width=True)
-    # fig1, ax1 = plt.subplots(figsize=(6, 2.5))
-    # ax1.bar(parent_data.index, parent_data.values)    
-    # ax1.set_xlabel("Parent Education Level")
-    # ax1.set_ylabel("Number of Students")
-    # plt.xticks(rotation=45)
-    # st.pyplot(fig1)
+    
     
 with tab3:
     st.header(" Dataset Viewer")
@@ -409,6 +400,7 @@ with tab5:
        
         
         
+
 
 
 
