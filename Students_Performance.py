@@ -341,9 +341,9 @@ with tab5:
             # "Study_Hours_per_Week": study_hours_per_week,
             # "Extracurricular_Activities": extracurricular_activities,
             # "Internet_Access_at_Home": internet_access_at_home,
-            "Parent_Education_Level": parent_education_level,
-            "Family_Income_Level": family_income_level,
-            "Stress_Level (1-10)": stress_level,
+            # "Parent_Education_Level": parent_education_level,
+            # "Family_Income_Level": family_income_level,
+            # "Stress_Level (1-10)": stress_level,
             # "Sleep_Hours_per_Night": sleep_hours_per_night,
             "Study_Efficiency": study_efficiency_val,
             "Parent_Education_Score": parent_edu_score_val,
@@ -405,6 +405,7 @@ with tab5:
         ax.legend()
         st.pyplot(fig, use_container_width=False)
         
+
 
 
 
