@@ -269,13 +269,28 @@ grade_map = {'A':4, 'B':3, 'C':2, 'D':1, 'F':0}
 yes_no_map = {'Yes': 1, 'No': 0}
 family_income_map = {'Low': 0, 'Medium': 1, 'High': 2}
 
+def get_grade(total):
+    if total < 60:
+        return "F"
+    elif total < 70:
+        return "D"
+    elif total < 80:
+        return "C"
+    elif total < 90:
+        return "B"
+    else:
+        return "A"
+df['Grade'] = df['Total'].apply(get_grade)   # Example usage
+print(df)
+
+
 # ----- 🎯 Tab 5: Prediction Form -----
 with tab5:
     st.header("🎯 Student Performance Prediction")
     with st.form("Prediction_form"):
-        gender = st.selectbox("Gender", ["Male", "Female"])
-        age = st.number_input("Age", min_value=10, max_value=25, value=18)
-        department = st.selectbox("Department", ['Mathematics', 'Business', 'Engineering', 'CS'])
+        # gender = st.selectbox("Gender", ["Male", "Female"])
+        # age = st.number_input("Age", min_value=10, max_value=25, value=18)
+        # department = st.selectbox("Department", ['Mathematics', 'Business', 'Engineering', 'CS'])
         attendance = st.number_input("Attendance (%)", min_value=0, max_value=100, value=90)
         midterm_score = st.number_input("Midterm Score", min_value=0, max_value=100, value=75)
         final_score = st.number_input("Final Score", min_value=0, max_value=100, value=80)
@@ -284,30 +299,36 @@ with tab5:
         participation_score = st.number_input("Participation Score", min_value=0, max_value=10, value=8)
         projects_score = st.number_input("Projects Score", min_value=0, max_value=100, value=90)
         total_score = st.number_input("Total Score", min_value=0, max_value=500, value=330)
-        grade = st.selectbox("Grade", ["A", "B", "C", "D", "F"])
-        study_hours_per_week = st.number_input("Study Hours per Week", min_value=0, max_value=100, value=15)
-        extracurricular_activities = st.selectbox("Extracurricular Activities", ["Yes", "No"])
-        internet_access_at_home = st.selectbox("Internet Access at Home", ["Yes", "No"])
-        parent_education_level = st.selectbox("Parent Education Level", ["No High School","High School", "Bachelor's", "Master's", "PhD"])
-        family_income_level = st.selectbox("Family Income Level", ["Low", "Medium", "High"])
-        stress_level = st.slider("Stress Level (1-10)", min_value=1, max_value=10, value=5)
-        sleep_hours_per_night = st.number_input("Sleep Hours per Night", min_value=0, max_value=12, value=7)
+        # grade = st.selectbox("Grade", ["A", "B", "C", "D", "F"])
+        # study_hours_per_week = st.number_input("Study Hours per Week", min_value=0, max_value=100, value=15)
+        # extracurricular_activities = st.selectbox("Extracurricular Activities", ["Yes", "No"])
+        # internet_access_at_home = st.selectbox("Internet Access at Home", ["Yes", "No"])
+        # parent_education_level = st.selectbox("Parent Education Level", ["No High School","High School", "Bachelor's", "Master's", "PhD"])
+        # family_income_level = st.selectbox("Family Income Level", ["Low", "Medium", "High"])
+        # stress_level = st.slider("Stress Level (1-10)", min_value=1, max_value=10, value=5)
+        # sleep_hours_per_night = st.number_input("Sleep Hours per Night", min_value=0, max_value=12, value=7)
     
     
         submit = st.form_submit_button("Predict")
 
         # Create input DataFrame with **exact column names** as in your training data
     if submit:
-        parent_edu_score_map = {'No High School':0, 'High School':1, "Bachelor's":2, "Master's":3, 'PhD':4}
-        parent_edu_score_val = parent_edu_score_map[parent_education_level]
-        internet_score_val = 1 if internet_access_at_home == "Yes" else 0
-        parent_support_score_val = parent_edu_score_val * 0.7 + internet_score_val * 0.3
-        study_efficiency_val = total_score / (study_hours_per_week * attendance + 1)
+        total_score = np.mean([midterm_score, final_score, assignments_avg, quizzes_avg, participation_score, projects_score])
+        study_efficiency = total_score / (midterm + final + assignments + quizzes + projects + 1)
+        grade = get_grade(total_score)
+        parent_support_score_val = 0.5   # default fixed value
+        internet_score_val = 0.5
+        parent_edu_score_map = 2
+        # parent_edu_score_map = {'No High School':0, 'High School':1, "Bachelor's":2, "Master's":3, 'PhD':4}
+        # parent_edu_score_val = parent_edu_score_map[parent_education_level]
+        # internet_score_val = 1 if internet_access_at_home == "Yes" else 0
+        # parent_support_score_val = parent_edu_score_val * 0.7 + internet_score_val * 0.3
+        # study_efficiency_val = total_score / (study_hours_per_week * attendance + 1)
         # Encode inputs
         raw_input = pd.DataFrame([{
-            "Gender": gender,
-            "Age": age,
-            "Department": department,
+            # "Gender": gender,
+            # "Age": age,
+            # "Department": department,
             "Attendance (%)": attendance,
             "Midterm_Score": midterm_score,
             "Final_Score": final_score,
@@ -316,14 +337,14 @@ with tab5:
             "Participation_Score": participation_score,
             "Projects_Score": projects_score,
             "Total_Score": total_score,
-            "Grade": grade,
-            "Study_Hours_per_Week": study_hours_per_week,
-            "Extracurricular_Activities": extracurricular_activities,
-            "Internet_Access_at_Home": internet_access_at_home,
+            "Grade": "F" if total_score < 60 ,
+            # "Study_Hours_per_Week": study_hours_per_week,
+            # "Extracurricular_Activities": extracurricular_activities,
+            # "Internet_Access_at_Home": internet_access_at_home,
             "Parent_Education_Level": parent_education_level,
             "Family_Income_Level": family_income_level,
             "Stress_Level (1-10)": stress_level,
-            "Sleep_Hours_per_Night": sleep_hours_per_night,
+            # "Sleep_Hours_per_Night": sleep_hours_per_night,
             "Study_Efficiency": study_efficiency_val,
             "Parent_Education_Score": parent_edu_score_val,
             "Internet_Score": internet_score_val,
@@ -372,7 +393,7 @@ with tab5:
             ax.text(v + 0.01, i, f"{v:.1%}", va='center')  
         ax.set_xlim(0,1) 
         st.pyplot(fig, use_container_width=False)
-        plt.tight_layout()
+       
         
         # Scatter plot
         st.subheader("Student Context")
@@ -383,5 +404,6 @@ with tab5:
         ax.set_ylabel("Total Score")
         ax.legend()
         st.pyplot(fig, use_container_width=False)
-        plt.tight_layout()
+        
+
 
