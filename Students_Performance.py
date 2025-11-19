@@ -233,7 +233,7 @@ with tab2:
     
     # st.subheader("Parent Education Level Distribution")
     y = df["Parent_Education_Level"].value_counts()
-    fig = px.bar(df, x="Parental_Educational_Level", title="Parental Educational Level Distribution")
+    fig = px.bar(df, x="Parent_Educational_Level", title="Parental Educational Level Distribution")
     st.plotly_chart(fig, use_container_width=True)
     # fig1, ax1 = plt.subplots(figsize=(6, 2.5))
     # ax1.bar(parent_data.index, parent_data.values)    
@@ -409,6 +409,7 @@ with tab5:
        
         
         
+
 
 
 
